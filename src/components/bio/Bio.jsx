@@ -1,5 +1,6 @@
 // Import React
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // Import Libs
 import faker from 'faker';
@@ -20,13 +21,14 @@ const Container = styled.div`
 
 const Name = styled.h1`
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
 
   margin-bottom: 10px;
 `;
 
 const Bread = styled.h2`
   font-size: 16px;
+  text-transform: capitalize;
 
   opacity: 0.7;
 
@@ -40,12 +42,14 @@ const Details = styled.p`
 
 class Bio extends Component {
   render() {
+    const { bread } = this.props;
+
     return (
       <Container>
         <Name>
           {faker.name.firstName()} | {Math.floor(Math.random() * 22) + 1}
         </Name>
-        <Bread>Sheba Inu</Bread>
+        <Bread>{bread}</Bread>
         <Details>
           I’m the doggo on the left. Please take me home cause my dad wont stop
           making jokes and laughing at me. Save me. Please.
@@ -54,5 +58,9 @@ class Bio extends Component {
     );
   }
 }
+
+Bio.propTypes = {
+  bread: PropTypes.string,
+};
 
 export default Bio;

@@ -1,5 +1,6 @@
 // Import React
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // Import Libs
 import styled from 'styled-components';
@@ -27,34 +28,47 @@ class Profile extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch('https://dog.ceo/api/breeds/image/random')
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            isLoaded: true,
-            dogImage: result.message,
-          });
-        },
+  componentWillReceiveProps(nextProps) {
+    const { bread } = nextProps;
 
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        error => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        },
-      );
+    if (bread) {
+      fetch(`https://dog.ceo/api/breed/${bread}/images/random`)
+        .then(res => res.json())
+        .then(
+          result => {
+            console.log(result);
+
+            this.setState({
+              isLoaded: true,
+              dogImage: result.message,
+            });
+          },
+
+          error => {
+            this.setState({
+              isLoaded: true,
+              error,
+            });
+          },
+        );
+    }
   }
 
   render() {
+    const { bread } = this.props;
     const { isLoaded, dogImage } = this.state;
 
-    return isLoaded && [<Hero img={dogImage} key="Hero" />, <Bio key="Bio" />];
+    return (
+      isLoaded && [
+        <Hero img={dogImage} key="Hero" />,
+        <Bio bread={bread} key="Bio" />,
+      ]
+    );
   }
 }
+
+Profile.propTypes = {
+  bread: PropTypes.string,
+};
 
 export default Profile;
