@@ -14,3 +14,9 @@ import './index.css';
 // Render App
 ReactDOM.render(<Application />, document.getElementById('root'));
 registerServiceWorker();
+
+if (module.hot && process.env.NODE_ENV !== 'production') {
+  module.hot.accept('./components/application/Application', () => {
+    ReactDOM.render(<Application />, document.getElementById('root'));
+  });
+}
