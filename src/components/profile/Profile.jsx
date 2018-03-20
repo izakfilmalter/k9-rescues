@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 // Import Libs
 import styled from 'styled-components';
 
-// Import Styles
-import { flexFlow } from '../../styles/layout';
+// Import Components
+import Bio from '../bio/Bio';
 
 // Styles
 const Hero = styled(({ img, ...otherProps }) => <div {...otherProps} />)`
@@ -14,12 +14,6 @@ const Hero = styled(({ img, ...otherProps }) => <div {...otherProps} />)`
   background-position: center;
 
   flex: 1;
-`;
-
-const Bio = styled.div`
-  ${flexFlow()};
-
-  height: 256px;
 `;
 
 class Profile extends Component {
@@ -57,9 +51,9 @@ class Profile extends Component {
   }
 
   render() {
-    const { error, isLoaded, dogImage } = this.state;
+    const { isLoaded, dogImage } = this.state;
 
-    return [<Hero img={dogImage} key="Hero" />, <Bio key="Bio" />];
+    return isLoaded && [<Hero img={dogImage} key="Hero" />, <Bio key="Bio" />];
   }
 }
 
