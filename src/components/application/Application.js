@@ -15,6 +15,7 @@ class Application extends Component {
         error: null,
         isLoaded: false,
       },
+      currentBread: '',
     };
 
     this.getRandomBread = this.getRandomBread.bind(this);
@@ -32,6 +33,8 @@ class Application extends Component {
               isLoaded: true,
             },
           });
+
+          this.getRandomBread();
         },
 
         error => {
@@ -53,13 +56,21 @@ class Application extends Component {
       return null;
     }
 
-    return data[Math.floor(Math.random() * data.length) + 1];
+    this.setState({
+      currentBread: data[Math.floor(Math.random() * data.length) + 1],
+    });
   }
 
   render() {
+    const { currentBread } = this.state;
+
     return [
       <Navigation key="navigation" />,
-      <Profile bread={this.getRandomBread()} key="profile" />,
+      <Profile
+        bread={currentBread}
+        nextDog={this.getRandomBread}
+        key="profile"
+      />,
     ];
   }
 }

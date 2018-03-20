@@ -8,13 +8,21 @@ import styled from 'styled-components';
 // Import Components
 import Bio from '../bio/Bio';
 
+// Import Styles
+import { flexFlow } from '../../styles/layout';
+
 // Styles
 const Hero = styled(({ img, ...otherProps }) => <div {...otherProps} />)`
   background: url(${props => props.img});
   background-size: cover;
   background-position: center;
 
+  ${flexFlow('row')} flex: 1;
+`;
+
+const Swipe = styled.div`
   flex: 1;
+  height: 100%;
 `;
 
 class Profile extends Component {
@@ -55,12 +63,15 @@ class Profile extends Component {
   }
 
   render() {
-    const { bread } = this.props;
+    const { bread, nextDog } = this.props;
     const { isLoaded, dogImage } = this.state;
 
     return (
       isLoaded && [
-        <Hero img={dogImage} key="Hero" />,
+        <Hero img={dogImage} key="Hero">
+          <Swipe onClick={nextDog} />
+          <Swipe onClick={nextDog} />
+        </Hero>,
         <Bio bread={bread} key="Bio" />,
       ]
     );
@@ -69,6 +80,7 @@ class Profile extends Component {
 
 Profile.propTypes = {
   bread: PropTypes.string,
+  nextDog: PropTypes.func.isRequired,
 };
 
 export default Profile;
